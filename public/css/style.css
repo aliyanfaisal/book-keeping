@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300');
+
+body {
+	 font-family: 'Poppins', sans-serif;
+}
+ main.active {
+	 margin-left: 0px !important;
+}
+ main {
+	 margin-left: 250px;
+	 transition: margin 0.5s;
+	 min-height: 100vh;
+}
+ #header-navbar #aside-toggle-btn {
+	 color: #293042;
+	 cursor: pointer;
+}
+ #header-navbar .user-dropdown .dropdown-menu {
+	 right: 0 !important;
+	 left: auto !important;
+}
+ #aside-nav.active {
+	 width: 0px !important;
+}
+ #aside-nav {
+	 overflow-y: auto;
+	 position: fixed;
+	 top: 0;
+	 bottom: 0;
+	 background-color: #293042;
+	 width: 250px;
+	 transition: width 0.5s;
+	 height: 100vh;
+}
+ #aside-nav .nav-link {
+	 font-size: 0.825rem;
+	 padding: 0.725rem 1.625rem;
+	 color: white;
+	 white-space: nowrap;
+	 letter-spacing: 0.3px;
+}
+ #aside-nav .nav-link svg {
+	 height: 20px;
+	 width: 20px;
+}
+ #aside-nav .aside-brand {
+	 padding: 1.15rem 1.725rem;
+	 display: block;
+	 color: #fff;
+	 fill: #fff;
+	 cursor: pointer;
+	 white-space: nowrap;
+}
+ #aside-nav .aside-brand svg {
+	 height: 20px;
+	 width: 20px;
+}
+ #aside-nav .active {
+	 background-color: #f8f9fa;
+	 color: #293042;
+	 font-weight: 500;
+	 box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.8);
+}
+ #aside-nav .dropdown-caret-svg svg {
+	 position: absolute;
+	 right: 20px;
+}
+ #aside-nav .dropdown-caret-svg.rotate-svg svg {
+	 transform: rotate(90deg);
+}
+ #aside-nav .aside-dropdown-menu a {
+	 padding-left: 58px;
+}
+ #aside-nav .aside-badge {
+	 background: #db2777;
+	 padding: 0px 7px;
+	 border-radius: 10px;
+	 color: white !important;
+}
+ @media (min-width: 300px) and (max-width: 1023.98px) {
+	 main {
+		 margin-left: 0px !important;
+	}
+	 #aside-nav {
+		 top: 63px !important;
+	}
+	 main {
+		 overflow: hidden;
+	}
+	 #header-navbar {
+		 position: fixed !important;
+	}
+	 #main {
+		 margin-top: 60px !important;
+	}
+}
+ 
