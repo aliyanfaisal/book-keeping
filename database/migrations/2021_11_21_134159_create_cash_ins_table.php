@@ -16,6 +16,7 @@ class CreateCashInsTable extends Migration
         Schema::create('cash_ins', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->bigInteger("user_id");
             $table->string("program");
             $table->string("reg_no");
             $table->string("semester");

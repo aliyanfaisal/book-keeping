@@ -2,6 +2,7 @@
 
 
 @section('content')
+<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 <style>
     tbody td{
         /* display: flex; */
@@ -26,11 +27,11 @@
                 {{Session::get('message')}}
             </div>
         @endif
-        <form action="{{route('submit-cash-in')}}" method="post" class="d-flex">
+        <form action="{{route('submit-cash-in')}}" method="post" target="_blank" class="d-flex">
             <!-- FIRST PART  -->
             @csrf
             <div class="col-md-9">
-                <table class="table ">
+                <table class="table " id="print_form">
                     <thead class="">
                         <th colspan="5">
                             <h3 class="text-right font-weight-bolder">OFFICIAL PAYMENT RECEIPT</h3>
@@ -76,7 +77,7 @@
                                 Admission Fee
                             </td>
                             <td>
-                                <input type="text" name="admission_fee" placeholder="Admission Fee" class="form-control fee">
+                                <input type="number" value="0" name="admission_fee" placeholder="Admission Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -85,7 +86,7 @@
                                 Registration Fee
                             </td>
                             <td>
-                                <input type="text" name="registration_fee" placeholder="Registration Fee" class="form-control fee">
+                                <input type="number" value="0" name="registration_fee" placeholder="Registration Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -94,7 +95,7 @@
                                 Security Fee
                             </td>
                             <td>
-                                <input type="text" name="security_fee" placeholder="Security Fee" class="form-control fee">
+                                <input type="number" value="0" name="security_fee" placeholder="Security Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -103,7 +104,7 @@
                                 Tuition Fee
                             </td>
                             <td>
-                                <input type="text" name="tuition_fee" placeholder="Tuition Fee" class="form-control fee">
+                                <input type="number" value="0" name="tuition_fee" placeholder="Tuition Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -112,7 +113,7 @@
                                 Semester Enrollment Fee
                             </td>
                             <td>
-                                <input type="text" name="semester_enrollment_fee" placeholder="Semester Enrollment Fee" class="form-control fee">
+                                <input type="number" value="0" name="semester_enrollment_fee" placeholder="Semester Enrollment Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -121,7 +122,7 @@
                                 Student Fund
                             </td>
                             <td>
-                                <input type="text" name="student_fee" placeholder="Student Fund" class="form-control fee">
+                                <input type="number" value="0" name="student_fee" placeholder="Student Fund" class="form-control fee">
                             </td>
                         </tr>
 
@@ -130,7 +131,7 @@
                                 Examination Fee
                             </td>
                             <td>
-                                <input type="text" name="examination_fee" placeholder="Examination Fee" class="form-control fee">
+                                <input type="number" value="0" name="examination_fee" placeholder="Examination Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -139,7 +140,7 @@
                                 Library Fee
                             </td>
                             <td>
-                                <input type="text" name="library_fee" placeholder="Library Fee" class="form-control fee">
+                                <input type="number" value="0" name="library_fee" placeholder="Library Fee" class="form-control fee">
                             </td>
                         </tr>
 
@@ -148,25 +149,26 @@
                                 Others
                             </td>
                             <td>
-                                <input type="text" name="others" placeholder="Others" class="form-control fee">
+                                <input type="number" value="0" name="others" placeholder="Others" class="form-control fee">
                             </td>
                         </tr>
 
                         <tr>
-                            <td class="text-right pl-4 font-weight-bolder py-1 pr-4 h5">
+                            <td class="d-flex justify-content-between pl-4 font-weight-bolder py-1 pr-4 h5">
+                                <a type="button" href="#" id="calc" class="btn btn-danger">Calculate</a>
                                 TOTAL
                             </td>
                             <td>
-                                <input type="text" name="total" class="form-control">
+                                <input required id="total" type="text" name="total" class="form-control">
                             </td>
                         </tr>
                         
                         <tr>
                             <td>
-                                <input type="text" name="paid" placeholder="Paid" class="form-control">
+                                <input type="number" name="paid" placeholder="Paid" class="form-control">
                             </td>
                             <td>
-                                <input type="text" name="balance" placeholder="Balance" class="form-control">
+                                <input type="number" name="balance" placeholder="Balance" class="form-control">
                             </td>
                         </tr>
 
@@ -192,7 +194,7 @@
 
                     <tr>
                         <td>
-                            <input type="text" name="date" placeholder="Date" class="form-control">
+                            <input type="date" name="date" placeholder="Date" class="form-control">
                         </td>
                     </tr>
 
@@ -226,7 +228,7 @@
 
                     <tr class="">
                         <td class="pt-5">
-                            <button type="submit" value="Submit" class="btn btn-lg btn-primary" id="">Submit</button>
+                            <button  type="submit" value="Submit" class="btn btn-lg btn-primary" id="submit">Submit</button>
                         </td>
                     </tr>
                 </table>
@@ -242,5 +244,44 @@
     
 </section>
 
+@endsection
+
+
+@section('js')
+<script src=" https://printjs-4de6.kxcdn.com/print.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $('#submit').click(function(e){
+        // e.preventDefault()
+        swal({
+        title: "Do You Want To Print Receipt?",
+        text: "",
+        icon: "alert",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            printJS('print_form', 'html')
+            // return false;
+        } else {
+            swal("Submitting Form. Please Wait.......");
+        }
+        });
+        
+    })
+    $('#calc').click(function(e){
+        e.preventDefault()
+        var total=0
+        $('input.fee').each(function(ind, e){
+            total= total+parseFloat($(this).val())
+            console.log(parseFloat($(this).val()))
+            $("input#total").val(total)
+        })
+
+
+        return false;
+    })
+</script>
 
 @endsection

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\CashIn;
+use App\Models\CashOut;
+use Carbon\Carbon;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -41,4 +44,21 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function cashIns(){
+        
+        return $this->hasMany(CashIn::class,"user_id");
+    }
+    public function cashOuts(){
+        return $this->hasMany(CashOut::class,"user_id");
+    }
+
+    public function getCashIns(){
+        return $this->cashIns()->whereDate('created_at', Carbon::today())->get();
+    }
+
+    public function getCashOuts(){
+        return $this->cashOuts()->get();
+    }
 }

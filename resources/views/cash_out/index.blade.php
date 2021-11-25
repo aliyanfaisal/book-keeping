@@ -2,6 +2,7 @@
 
 
 @section('content')
+<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 <style>
     tbody td{
         /* display: flex; */
@@ -26,9 +27,12 @@
                 {{Session::get('message')}}
             </div>
         @endif
-        <form action="{{route('submit-cash-out')}}" method="post" class="d-flex">
+        <form action="{{route('submit-cash-out')}}" method="post" class="d-flex" target="_blank">
             <!-- FIRST PART  -->
             @csrf
+            <div>
+                Form Sr: {{rand(1000,50000)}}
+            </div>
             <div class="col-md-9">
                 <table class="table ">
                     <thead class="">
@@ -76,7 +80,7 @@
                                 Salary
                             </td>
                             <td>
-                                <input type="text" name="salary" placeholder="Salary" class="form-control fee">
+                                <input type="number" value="0" name="salary" placeholder="Salary" class="form-control fee">
                             </td>
                         </tr>
 
@@ -85,7 +89,7 @@
                                 Rental
                             </td>
                             <td>
-                                <input type="text" name="rental" placeholder="Rental" class="form-control fee">
+                                <input type="number" value="0" name="rental" placeholder="Rental" class="form-control fee">
                             </td>
                         </tr>
 
@@ -94,7 +98,7 @@
                                 Utility Bills
                             </td>
                             <td>
-                                <input type="text" name="utility_bills" placeholder="Utility Bills" class="form-control fee">
+                                <input type="number" value="0" name="utility_bills" placeholder="Utility Bills" class="form-control fee">
                             </td>
                         </tr>
 
@@ -103,7 +107,7 @@
                                 Purchases
                             </td>
                             <td>
-                                <input type="text" name="purchases" placeholder="Purchases" class="form-control fee">
+                                <input type="number" value="0" name="purchases" placeholder="Purchases" class="form-control fee">
                             </td>
                         </tr>
 
@@ -112,16 +116,17 @@
                                 Repair Maintanance Fee
                             </td>
                             <td>
-                                <input type="text" name="repair_maintenance" placeholder="Repair Maintanance" class="form-control fee">
+                                <input type="number" value="0" name="repair_maintenance" placeholder="Repair Maintanance" class="form-control fee">
                             </td>
                         </tr>
 
                         <tr>
-                            <td class="text-right pl-4 font-weight-bolder py-1 pr-4 h5">
+                            <td class="d-flex justify-content-between pl-4 font-weight-bolder py-1 pr-4 h5">
+                                <a type="button" href="#" id="calc" class="btn btn-danger">Calculate</a>
                                 TOTAL
                             </td>
                             <td>
-                                <input type="text" name="total" class="form-control">
+                                <input required id="total" type="text" name="total" class="form-control">
                             </td>
                         </tr>
                         
@@ -190,7 +195,7 @@
 
                     <tr class="">
                         <td class="pt-5">
-                            <button type="submit" value="Submit" class="btn btn-lg btn-primary" id="">Submit</button>
+                            <button type="submit" value="Submit" class="btn btn-lg btn-primary" id="submit">Submit</button>
                         </td>
                     </tr>
                 </table>
@@ -206,5 +211,47 @@
     
 </section>
 
+
+@endsection
+
+
+@section('js')
+<script src=" https://printjs-4de6.kxcdn.com/print.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $('#submit').click(function(e){
+        // e.preventDefault()
+        swal({
+        title: "Do You Want To Print Receipt?",
+        text: "",
+        icon: "alert",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            printJS('print_form', 'html')
+            // return false;
+        } else {
+            // window.close()
+            swal("Submitting Form. Please Wait.......");
+        }
+        });
+        
+    })
+<script>
+    $('#calc').click(function(e){
+        e.preventDefault()
+        var total=0
+        $('input.fee').each(function(ind, e){
+            total= total+parseFloat($(this).val())
+            console.log(parseFloat($(this).val()))
+            $("input#total").val(total)
+        })
+
+
+        return false;
+    })
+</script>
 
 @endsection

@@ -46,7 +46,7 @@
             <!-- aside nav ul list -->
             <ul class="nav flex-column" id="aside-nav-ul">
                 <li class="nav-item">
-                    <a class="nav-link @if(strpos($_SERVER['REQUEST_URI'], 'home' )!=false) active @endif   " href="/">
+                    <a class="nav-link @if(strpos($_SERVER['REQUEST_URI'], 'home' )!=false) active @endif   " href="/home">
                         <!-- svg -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -191,12 +191,17 @@
                                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                           </svg>
                                         <!--/svg-->
-                                        <span>Sunil Salaria</span>                                        
+                                        <span>{{Auth::user()->name}}</span>                                        
                                     </a>
                                     <ul class="dropdown-menu shadow-sm" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                                        <li>
+                                            <form action="/logout" method="post">
+                                                @csrf
+                                            <button type="submit" class="dropdown-item btn btn-light" href="#">Logout</button>
+                                            </form>
+                                            
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -216,7 +221,7 @@
 
             <!-- === footer === -->
             <footer id="footer" class="bg-dark py-3 text-white text-center shadow-sm mt-auto">
-                <div>© All Rights Reserved</div>
+                <div>© All Rights Reserved. Powered By <a href="http://afbinc.epizy.com"> AFB.inc</a></div>
             </footer>
             <!-- === /footer === -->
 
@@ -230,7 +235,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script >
-        $(document).ready(function(){
+$(document).ready(function(){
 
 //side nav toggle button hide/show
 $("#aside-toggle-btn").click(function(){       
@@ -262,5 +267,9 @@ $("#aside-nav-ul .nav-link").click(function(){
 
 
     </script>
+
+
+
+@yield('js')
 </body>
 </html>

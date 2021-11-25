@@ -17,6 +17,7 @@ class CreateCashOutsTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("designation");
+            $table->bigInteger("user_id");
             $table->string("contact")->nullable();
             $table->string("cnic")->nullable();
             $table->string("salary")->nullable();
